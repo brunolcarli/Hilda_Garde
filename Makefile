@@ -6,3 +6,7 @@ run:
 
 help:
 	python3 manage.py help
+
+pipe:
+	make install
+	make run
