@@ -25,8 +25,11 @@ async def version(ctx):
     await ctx.send(__version__)
 
 
-@client.command()
+@client.command(aliases=['tn'])
 async def tournament(ctx, tournament_id):
+    """
+    Returns tournament information by the tournament ID.
+    """
     url = f'{ENDPOINTS["tournaments"]}{tournament_id}'
     response = requests.get(url).json()
 
@@ -46,8 +49,11 @@ async def tournament(ctx, tournament_id):
     return await ctx.send(f'**{response.get("name")}**', embed=embed)
 
 
-@client.command()
+@client.command(aliases=['teams'])
 async def tournament_teams(ctx, tournament_id):
+    """
+    Return registered teams on a given tournament.
+    """
     url = f'{ENDPOINTS["tournaments"]}{tournament_id}/teams'
     response = requests.get(url).json()
 
@@ -59,8 +65,11 @@ async def tournament_teams(ctx, tournament_id):
     return await ctx.send('Teams for tournament:', embed=embed)
 
 
-@client.command()
+@client.command(aliases=['players'])
 async def tournament_players(ctx, tournament_id, team_id):
+    """
+    Return players of a team in a tournament.
+    """
     url = f'{ENDPOINTS["tournaments"]}{tournament_id}/teams'
     response = requests.get(url).json()
 
@@ -78,8 +87,11 @@ async def tournament_players(ctx, tournament_id, team_id):
     return await ctx.send('Team general view:', embed=embed)
 
 
-@client.command()
+@client.command(aliases=['cp', 'games'])
 async def campaigns(ctx, *game_name):
+    """
+    Returns ongoing campaigns.
+    """
     game_name = ' '.join(token for token in game_name).strip()
     url = ENDPOINTS['campaigns']
     response = requests.get(url).json()
