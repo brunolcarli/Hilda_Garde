@@ -6,6 +6,7 @@ from difflib import SequenceMatcher
 import discord
 from discord.ext import commands, tasks
 from hilda_garde.settings import __version__, ENDPOINTS
+from core.util import DBHandler
 
 
 log = logging.getLogger(__name__)
@@ -122,3 +123,44 @@ async def campaigns(ctx, *game_name):
     embed.add_field(name='Link URL', value=game_data['linkUrl'], inline=True)
 
     return await ctx.send('Campaign info:', embed=embed)
+
+
+@client.command()
+async def store(ctx, value=None):
+    """
+    Stores a value on database.
+    Max values storage is limited to 10.
+    """
+    if not value:
+        return await ctx.send('A value to store is required.')
+
+    # Retrieve previous data to include
+    data = DBHandler.get_data() or []
+    data.append(value)
+
+    # insert on database
+    response = DBHandler.insert_data(data)
+
+    if response != 200:
+        return await ctx.send(
+            f'Something gone wrong. Cant save data on database with error {response}'
+        )
+
+    return await ctx.send('Saved value on database.')
+
+
+@client.command(aliases=['saved', 'list', 'db'])
+async def itens(ctx):
+    """
+    Retrieve saved data from database.
+    """
+    data = DBHandler.get_data() or []
+    if not data:
+        return await ctx.send("Theres nothing saved on database.")
+
+    embed = discord.Embed(color=0x1E1E1E, type="rich")
+
+    for item in data:
+        embed.add_field(name='Item', value=item, inline=True)
+
+    return await ctx.send('Saved itens:', embed=embed)

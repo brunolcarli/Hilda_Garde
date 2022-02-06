@@ -9,8 +9,15 @@ log = logging.getLogger()
 
 if __name__ == '__main__':
     log.info(
-        '''
-        Init banner
+        r'''
+               _..--=--..._
+            .-'            '-.  .-.
+        /.'              '.\/  /
+        |=-                -=| (
+        \'.              .'/\  \
+            '-.,_____ _____.-'  '-'
+        jgs      [_____]=8
+
         '''
     )
     log.info('Running Hilda Garde version: %s\n', __version__)

@@ -7,6 +7,8 @@ __version__ = '0.0.1'
 
 TOKEN = config('TOKEN', '')
 SETTINGS_MODULE = config('SETTINGS_MODULE', 'common')
+DB_HOST = config('REPLIT_DB_URL')
+DB_KEY = config('DB_KEY')
 
 ENDPOINTS = {
     'campaigns': 'https://search.battlefy.com/homepage/campaigns/active?gameSlug=&&',
